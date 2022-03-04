@@ -26,12 +26,12 @@ device = 'cuda' if torch.cuda.is_available() else 'cpu'
 n_customers = 51527
 n_items = 19519
 ncfModel = MF(n_customers, n_items)
-
-# ncfModel = Model(n_customers, n_items)
 ncfModel.to(device)
+
 optimizer = torch.optim.Adam(ncfModel.parameters())
 loss_fn = torch.nn.BCELoss()
 loss_fn.to(device)
+
 num_epochs = 100
 total_samples = len(dataset)
 n_iterations = math.ceil(total_samples / 4)
@@ -40,14 +40,12 @@ min_valid_loss = np.inf
 
 
 def validation_set():
-    # price
     target = ncfModel(customers.int(), items.int())
     target = torch.squeeze(target)
     return loss_fn(target, labels.float())
 
 
 def train_step():
-    # , price
     optimizer.zero_grad()
     outputs = ncfModel(customers.int(), items.int())
     outputs = torch.squeeze(outputs)
