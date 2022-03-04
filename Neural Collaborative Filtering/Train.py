@@ -9,8 +9,6 @@ import numpy as np
 
 dataset = NCFDataSet('indexCustomersLabeled200.csv')
 train, valid = random_split(dataset, [550000, 50000])
-# dataset = NCFDataSet('dummy.csv')
-# train, valid = random_split(dataset, [5, 2])
 print(len(dataset), ' data len')
 train_loader = DataLoader(dataset=train,
                           batch_size=128,
